@@ -20,3 +20,9 @@ main > div{
     border: 1px solid #ccc;
     padding: 10px 20px;
 }
+input{
+    padding: 5px 10px;
+    width: 100%;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
