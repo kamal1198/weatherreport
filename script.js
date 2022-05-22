@@ -123,4 +123,49 @@ function searchCity(city){
                             <td>${weather.speed}m/s</td>
                             <td>${weather.humidity}%</td>
                             </tr>`;
-                            
+                          
+         // append to the content
+         document.getElementById('forecast-history').innerHTML = content;
+        });
+    }else{
+        alert('Error: ' + data.message);
+    }
+});
+
+// clear the input
+document.getElementById('city').value = "";
+document.getElementById('city').focus();
+}
+
+// function populate searchHistory
+function populateSearchHistory(){
+searchHistory.forEach((item) => {
+    appendSearchToList(item);
+});
+}
+
+ // function to append search to search history ul
+ function appendSearchToList(city){
+    let li =document.createElement('li');
+    let a = document.createElement('a');
+    
+    a.className = 'search-history-entry';
+    a.textContent = city;
+    a.href = '#';
+
+    // append the list anchor element to list item
+    li.appendChild(a);
+
+    // add the search history to container
+    document.getElementById('history-list').appendChild(li);
+}
+
+// function to add city to local storage
+function addCityToLocalStorage(city){
+    searchHistory.push(city);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+}
+
+// populate the search history section
+populateSearchHistory();
+
