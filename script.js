@@ -89,3 +89,38 @@ function searchCity(city){
     url = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=5&appid=6134317c10db877014543c36d6f4d45d"
 
     fetch(url)
+    .then(res => res.json())
+        .then(data => {
+            // check if the response has an error
+            if(data.cod != 404){
+                document.getElementById('forecast-title').textContent = "Five Day forecast";
+                // first, empty the div that will  display the forecast, Then add headers to the table
+                document.getElementById('forecast-history').innerHTML = `
+                <tr>
+                    <th>Date</th>
+                    <th>Icon</th>
+                    <th>Day Temp</th>
+                    <th>Min Temp</th>
+                    <th>Max Temp</th>
+                    <th>Wind Speed</th>
+                    <th>Humidity</th>
+                </tr>`;  
+                
+               // loop through the forecasts
+               data.list.forEach((weather) => {
+                // get the current innerHTML of the forecast div
+                let content = document.getElementById('forecast-history').innerHTML;
+
+                let date = new Date(weather.dt * 1000);
+
+                content += `
+                        <tr>
+                            <td>${date.toDateString()}</td>
+                            <td><img width = "30" src = " http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"></td>
+                            <td>${weather.temp.day}K</td>
+                            <td>${weather.temp.min}K</td>
+                            <td>${weather.temp.max}K</td>
+                            <td>${weather.speed}m/s</td>
+                            <td>${weather.humidity}%</td>
+                            </tr>`;
+                            
