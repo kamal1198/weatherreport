@@ -169,3 +169,42 @@ function addCityToLocalStorage(city){
 // populate the search history section
 populateSearchHistory();
 
+ // event listener for when the search button is clicked
+ document.getElementById('view-forecast').addEventListener('click', (e) => {
+    // get the city from the input box
+    let city = document.getElementById('city').value;
+
+    // check if the city is empty
+    if(city.trim() != '' || city != undefined){
+        //remove all leading and trailing spaces
+        city = city.trim();
+
+        // add the search to local storage
+        addCityToLocalStorage(city);
+
+        // search the city
+        searchCity(city);
+
+        // append the city to history
+        appendSearchToList(city);
+
+    }else{
+        alert('Please enter city to view forecast');
+    }
+    
+});
+
+
+//event listener for when a user clicks on an item in the search history
+document.addEventListener('click', (e) => {
+    // since the search items are dynamic, we check all the click events to find the specific class
+    if(e.target && e.target.className == 'search-history-entry'){
+        //prevent the window from reloading
+        e.preventDefault();
+        
+        // search the city
+        searchCity(e.target.textContent);
+    }
+});
+
+});
